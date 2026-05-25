@@ -4,8 +4,25 @@ import ApplicationTable from "../components/ApplictionTable";
 import ApplicationPagination from "../components/ApplicationPagination";
 import { Plus } from "lucide-react";
 import { applications } from "../data/applications";
+import { useState } from "react";
 
 function Applications() {
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    const totalPages = Math.ceil(applications.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     return (
         <div className="min-w-0">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -22,8 +39,14 @@ function Applications() {
 
             <ApplicationFilter />
 
-            <ApplicationTable />
-            <ApplicationPagination total={applications.length} />
+            <ApplicationTable currentPage={currentPage} itemsPerPage={itemsPerPage} />
+            <ApplicationPagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                total={applications.length}
+                onNextPage={handleNextPage}
+                onPreviousPage={handlePreviousPage}
+            />
         </div>
     );
 }

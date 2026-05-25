@@ -1,6 +1,7 @@
 import { EllipsisVertical } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import {applications} from "../data/applications"
+import { NavLink } from "react-router-dom";
 
 function RecentApplications() {
 
@@ -14,7 +15,9 @@ function RecentApplications() {
                 </h2>
 
                 <button className="text-sm font-medium text-violet-600 hover:text-violet-700">
-                    View All
+                    <NavLink to="/applications">
+                        View All
+                    </NavLink>
                 </button>
             </div>
             <div className="overflow-x-auto min-w-0">

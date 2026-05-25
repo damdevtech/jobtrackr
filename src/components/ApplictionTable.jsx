@@ -2,7 +2,11 @@ import {applications} from "../data/applications"
 import StatusBadge from "./StatusBadge";
 import { Pencil, Trash2 } from "lucide-react";
 
-export default function ApplicationFilter() {
+export default function ApplicationTable({ currentPage = 1, itemsPerPage = 10 }) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedApplications = applications.slice(startIndex, endIndex);
+
     return(
         <div className="mt-6 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
                 <div className="overflow-x-auto">
@@ -34,7 +38,7 @@ export default function ApplicationFilter() {
                         </thead>
 
                         <tbody className="divide-y divide-slate-100 bg-white">
-                            {applications.map((app) => (
+                            {paginatedApplications.map((app) => (
                                 <tr key={app.id} className="hover:bg-slate-50">
                                     <td className="whitespace-nowrap px-6 py-4 font-medium text-slate-900">
                                         {app.company}
