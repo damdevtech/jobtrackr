@@ -1,21 +1,22 @@
 import Header from '../components/Header'
-import RecentApplictions from '../components/RecentApplications'
+import RecentApplications from '../components/RecentApplications'
 import StatsCard from '../components/StatsCard'
 import { ClipboardList, Users, CheckCircle, XCircle } from "lucide-react"
-import { initialApplications } from "../data/applications"
+import { useApplications } from "../context/ApplicationsContext"
 
 
 function Dashboard() {
-    const totalApplications = initialApplications.length;
-    const interviews = initialApplications.filter(
+    const { applications } = useApplications();
+    const totalApplications = applications.length;
+    const interviews = applications.filter(
         (app) => app.status === "Interviewing"
     ).length;
 
-    const offers = initialApplications.filter(
+    const offers = applications.filter(
         (app) => app.status === "Offered"
     ).length;
 
-    const rejections = initialApplications.filter(
+    const rejections = applications.filter(
         (app) => app.status === "Rejected"
     ).length;
 
@@ -53,22 +54,22 @@ function Dashboard() {
     const statusSummary = [
         {
             label: "Applied",
-            value: initialApplications.filter((app) => app.status === "Applied").length,
+            value: applications.filter((app) => app.status === "Applied").length,
             color: "bg-slate-400",
         },
         {
             label: "Interviewing",
-            value: initialApplications.filter((app) => app.status === "Interviewing").length,
+            value: applications.filter((app) => app.status === "Interviewing").length,
             color: "bg-violet-500",
         },
         {
             label: "Offered",
-            value: initialApplications.filter((app) => app.status === "Offered").length,
+            value: applications.filter((app) => app.status === "Offered").length,
             color: "bg-emerald-500",
         },
         {
             label: "Rejected",
-            value: initialApplications.filter((app) => app.status === "Rejected").length,
+            value: applications.filter((app) => app.status === "Rejected").length,
             color: "bg-rose-500",
         },
     ];
@@ -114,7 +115,7 @@ function Dashboard() {
                 </div>
 
             </div>
-            <RecentApplictions />
+            <RecentApplications />
         </main>
 
     );
