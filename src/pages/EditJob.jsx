@@ -1,24 +1,27 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useApplications } from "../context/ApplicationsContext";
 import Header from "../components/Header";
 
-function AddJob() {
-    const { addApplication } = useApplications();
+function EditJob() {
+    const { id } = useParams();
+    const { applications, updateApplication } = useApplications();
+    const applicationToEdit = applications.find((application) => String(application.id) === id
+    );
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        companyName: "",
-        status: "Applied",
-        companyLogo: "",
-        jobTitle: "",
-        applicationDate: "",
-        jobType: "Full-time",
-        salary: "",
-        location: "Lagos, Nigeria",
-        jobLink: "",
-        notes: "",
+        companyName: applicationToEdit?.company || "",
+        status: applicationToEdit?.status || "Applied",
+        companyLogo: applicationToEdit?.companyLogo || "",
+        jobTitle: applicationToEdit?.role || "",
+        applicationDate: applicationToEdit?.dateApplied || "",
+        jobType: applicationToEdit?.type || "Full-time",
+        salary: applicationToEdit?.salary || "",
+        location: applicationToEdit?.location || "Lagos, Nigeria",
+        jobLink: applicationToEdit?.jobLink || "",
+        notes: applicationToEdit?.notes || "",
     });
 
     function handleInputChange(e) {
@@ -28,8 +31,8 @@ function AddJob() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        const newApplication = {
-            id: Date.now(),
+        const updatedApplication = {
+            id: applicationToEdit.id,
             company: formData.companyName,
             role: formData.jobTitle,
             type: formData.jobType,
@@ -42,8 +45,28 @@ function AddJob() {
             companyLogo: formData.companyLogo,
         };
 
-        addApplication(newApplication);
+        updateApplication(updatedApplication);
+        if (!applicationToEdit) {
+            return <p>Application not found</p>;
+        }
         navigate("/applications");
+    }
+    if (!applicationToEdit) {
+        return (
+            <div>
+                <NavLink
+                    to="/applications"
+                    className="inline-flex w-fit items-center justify-center gap-2 rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+                >
+                    <ArrowLeft size={16} />
+                    Back
+                </NavLink>
+
+                <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600 shadow-sm">
+                    Application not found.
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -58,8 +81,8 @@ function AddJob() {
                 </NavLink>
 
                 <Header
-                    title="Add Job"
-                    subtitle="Submit a new job application to your tracker"
+                    title="Edit Job"
+                    subtitle=" Update this job application"
                 />
             </div>
 
@@ -243,7 +266,7 @@ function AddJob() {
                             type="submit"
                             className="inline-flex h-10 w-full items-center justify-center rounded-lg bg-violet-600 px-4 text-sm font-medium text-white hover:bg-violet-700"
                         >
-                            Submit
+                            Save Changes
                         </button>
                     </div>
                 </div>
@@ -252,4 +275,4 @@ function AddJob() {
     );
 }
 
-export default AddJob;
+export default EditJob;

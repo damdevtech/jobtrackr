@@ -2,20 +2,20 @@ import Header from '../components/Header'
 import RecentApplictions from '../components/RecentApplications'
 import StatsCard from '../components/StatsCard'
 import { ClipboardList, Users, CheckCircle, XCircle } from "lucide-react"
-import { applications } from "../data/applications"
+import { initialApplications } from "../data/applications"
 
 
 function Dashboard() {
-    const totalApplications = applications.length;
-    const interviews = applications.filter(
+    const totalApplications = initialApplications.length;
+    const interviews = initialApplications.filter(
         (app) => app.status === "Interviewing"
     ).length;
 
-    const offers = applications.filter(
+    const offers = initialApplications.filter(
         (app) => app.status === "Offered"
     ).length;
 
-    const rejections = applications.filter(
+    const rejections = initialApplications.filter(
         (app) => app.status === "Rejected"
     ).length;
 
@@ -53,22 +53,22 @@ function Dashboard() {
     const statusSummary = [
         {
             label: "Applied",
-            value: applications.filter((app) => app.status === "Applied").length,
+            value: initialApplications.filter((app) => app.status === "Applied").length,
             color: "bg-slate-400",
         },
         {
             label: "Interviewing",
-            value: applications.filter((app) => app.status === "Interviewing").length,
+            value: initialApplications.filter((app) => app.status === "Interviewing").length,
             color: "bg-violet-500",
         },
         {
             label: "Offered",
-            value: applications.filter((app) => app.status === "Offered").length,
+            value: initialApplications.filter((app) => app.status === "Offered").length,
             color: "bg-emerald-500",
         },
         {
             label: "Rejected",
-            value: applications.filter((app) => app.status === "Rejected").length,
+            value: initialApplications.filter((app) => app.status === "Rejected").length,
             color: "bg-rose-500",
         },
     ];

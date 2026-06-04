@@ -1,11 +1,11 @@
 import { EllipsisVertical } from "lucide-react";
 import StatusBadge from "./StatusBadge";
-import {applications} from "../data/applications"
+import {initialApplications} from "../data/applications"
 import { NavLink } from "react-router-dom";
 
 function RecentApplications() {
 
-    const recentApplications = applications.slice(0, 4);
+    const recentApplications = initialApplications.slice(0, 5);
 
     return (
         <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">

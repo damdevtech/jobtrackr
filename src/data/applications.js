@@ -1,4 +1,4 @@
-export const applications = [
+export const initialApplications = [
         {
             id: 1,
             company: "Flutterwave",
