@@ -5,6 +5,7 @@ import { ClipboardList, Users, CheckCircle, XCircle } from "lucide-react"
 import { useApplications } from "../context/ApplicationsContext"
 
 
+
 function Dashboard() {
     const { applications } = useApplications();
     const totalApplications = applications.length;
@@ -24,31 +25,35 @@ function Dashboard() {
         {
             title: "Total Applications",
             value: totalApplications.toString(),
-            change: "12% from last month",
+            change: "All tracked jobs",
+            changeColor: "text-violet-600",
             icon: ClipboardList,
-            color: "bg-violet-100 text-violet-600"
+            color: "bg-violet-100 text-violet-600",
         },
         {
             title: "Interviews",
             value: interviews.toString(),
-            change: "14% from last month",
+            change: "Active interview stage",
+            changeColor: "text-blue-600",
             icon: Users,
-            color: "bg-blue-100 text-blue-600"
+            color: "bg-blue-100 text-blue-600",
         },
         {
             title: "Offers",
             value: offers.toString(),
-            change: "50% from last month",
+            change: "Successful outcomes",
+            changeColor: "text-emerald-600",
             icon: CheckCircle,
-            color: "bg-emerald-100 text-emerald-600"
+            color: "bg-emerald-100 text-emerald-600",
         },
         {
             title: "Rejections",
             value: rejections.toString(),
-            change: "10% from last month",
+            change: "Closed opportunities",
+            changeColor: "text-rose-600",
             icon: XCircle,
-            color: "bg-rose-100 text-rose-600"
-        }
+            color: "bg-rose-100 text-rose-600",
+        },
     ];
 
     const statusSummary = [
@@ -84,6 +89,7 @@ function Dashboard() {
                         title={stat.title}
                         value={stat.value}
                         change={stat.change}
+                        changeColor={stat.changeColor}
                         icon={stat.icon}
                         color={stat.color}
                     />

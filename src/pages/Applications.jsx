@@ -3,16 +3,44 @@ import ApplicationFilter from "../components/ApplicationFilter";
 import ApplicationTable from "../components/ApplictionTable";
 import ApplicationPagination from "../components/ApplicationPagination";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useApplications } from "../context/ApplicationsContext";
 
 function Applications() {
     const { applications } = useApplications();
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState("All Statuses");
+    const [typeFilter, setTypeFilter] = useState("All Types");
+    const [locationFilter, setLocationFilter] = useState("All Locations");
     const [currentPage, setCurrentPage] = useState(1);
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, statusFilter, typeFilter, locationFilter]);
+
     const itemsPerPage = 10;
-    const totalPages = Math.ceil(applications.length / itemsPerPage);
+
+    const filteredApplications = applications.filter((app) => {
+        const matchesSearch =
+            app.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            app.role.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesStatus =
+            statusFilter === "All Statuses" || app.status === statusFilter;
+
+        const matchesType = typeFilter === "All Types" || app.type === typeFilter;
+
+        const matchesLocation =
+            locationFilter === "All Locations" || app.location === locationFilter;
+
+        return matchesSearch && matchesStatus && matchesType && matchesLocation;
+    });
+
+    const totalPages = Math.max(
+        1,
+        Math.ceil(filteredApplications.length / itemsPerPage)
+    );
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -26,6 +54,12 @@ function Applications() {
         setCurrentPage(() => Math.min(Math.max(page, 1), totalPages));
     };
 
+    function clearFilters() {
+        setSearchTerm("");
+        setStatusFilter("All Statuses");
+        setTypeFilter("All Types");
+        setLocationFilter("All Locations");
+    }
     return (
         <div className="min-w-0">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -43,10 +77,20 @@ function Applications() {
                 </NavLink>
             </div>
 
-            <ApplicationFilter />
+            <ApplicationFilter
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                statusFilter={statusFilter}
+                setStatusFilter={setStatusFilter}
+                typeFilter={typeFilter}
+                setTypeFilter={setTypeFilter}
+                locationFilter={locationFilter}
+                setLocationFilter={setLocationFilter}
+                clearFilters={clearFilters}
+            />
 
             <ApplicationTable
-                applications={applications}
+                applications={filteredApplications}
                 currentPage={currentPage}
                 itemsPerPage={itemsPerPage}
             />
@@ -55,7 +99,7 @@ function Applications() {
                 currentPage={currentPage}
                 itemsPerPage={itemsPerPage}
                 totalPages={totalPages}
-                total={applications.length}
+                total={filteredApplications.length}
                 onNextPage={handleNextPage}
                 onPreviousPage={handlePreviousPage}
                 onPageChange={handlePageChange}

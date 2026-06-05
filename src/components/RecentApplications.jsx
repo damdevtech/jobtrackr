@@ -1,11 +1,11 @@
-import { EllipsisVertical } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
-import {useApplications} from "../context/ApplicationsContext"
+import { useApplications } from "../context/ApplicationsContext"
 import { NavLink } from "react-router-dom";
 
 function RecentApplications() {
 
-    const {applications} = useApplications();
+    const { applications, deleteApplication } = useApplications();
     const recentApplications = applications.slice(0, 5);
 
     return (
@@ -57,10 +57,31 @@ function RecentApplications() {
                                     {app.dateApplied}
                                 </td>
 
-                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700">
-                                        <EllipsisVertical size={18} />
-                                    </button>
+                                <td className="whitespace-nowrap px-6 py-4">
+                                    <div className="flex items-center justify-end gap-2">
+                                        <NavLink
+                                            to={`/applications/${app.id}/edit`}
+                                            className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-violet-600"
+                                        >
+                                            <Pencil size={16} />
+                                        </NavLink>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const shouldDelete = window.confirm(
+                                                    `Delete ${app.company} application?`
+                                                );
+
+                                                if (shouldDelete) {
+                                                    deleteApplication(app.id);
+                                                }
+                                            }}
+                                            className="rounded-lg p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
