@@ -3,9 +3,9 @@ import ApplicationFilter from "../components/ApplicationFilter";
 import ApplicationTable from "../components/ApplictionTable";
 import ApplicationPagination from "../components/ApplicationPagination";
 import { Plus } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useApplications } from "../context/ApplicationsContext";
+import { useApplications } from "../context/useApplications";
 
 function Applications() {
     const { applications } = useApplications();
@@ -15,9 +15,26 @@ function Applications() {
     const [typeFilter, setTypeFilter] = useState("All Types");
     const [locationFilter, setLocationFilter] = useState("All Locations");
     const [currentPage, setCurrentPage] = useState(1);
-    useEffect(() => {
+
+    function updateSearchTerm(value) {
+        setSearchTerm(value);
         setCurrentPage(1);
-    }, [searchTerm, statusFilter, typeFilter, locationFilter]);
+    }
+
+    function updateStatusFilter(value) {
+        setStatusFilter(value);
+        setCurrentPage(1);
+    }
+
+    function updateTypeFilter(value) {
+        setTypeFilter(value);
+        setCurrentPage(1);
+    }
+
+    function updateLocationFilter(value) {
+        setLocationFilter(value);
+        setCurrentPage(1);
+    }
 
     const itemsPerPage = 10;
 
@@ -79,13 +96,13 @@ function Applications() {
 
             <ApplicationFilter
                 searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
+                setSearchTerm={updateSearchTerm}
                 statusFilter={statusFilter}
-                setStatusFilter={setStatusFilter}
+                setStatusFilter={updateStatusFilter}
                 typeFilter={typeFilter}
-                setTypeFilter={setTypeFilter}
+                setTypeFilter={updateTypeFilter}
                 locationFilter={locationFilter}
-                setLocationFilter={setLocationFilter}
+                setLocationFilter={updateLocationFilter}
                 clearFilters={clearFilters}
             />
 

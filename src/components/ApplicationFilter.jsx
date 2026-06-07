@@ -9,7 +9,7 @@ export default function ApplicationFilter({ searchTerm,
     setTypeFilter,
     locationFilter,
     setLocationFilter,
-    clearFilters={clearFilters} }) {
+    clearFilters }) {
     return (
         <div className="mt-4 min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm functionality">
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[minmax(220px,1fr)_140px_120px_140px_auto]">
@@ -43,7 +43,7 @@ export default function ApplicationFilter({ searchTerm,
                     value={typeFilter}
                     onChange={(e) => setTypeFilter(e.target.value)}
                     className="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-700 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100">
-                    <option>All Type</option>
+                    <option>All Types</option>
                     <option>Full-time</option>
                     <option>Part-time</option>
                     <option>Contract</option>

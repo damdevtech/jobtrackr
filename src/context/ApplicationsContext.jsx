@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { initialApplications } from "../data/applications";
-
-const ApplicationsContext = createContext();
+import { ApplicationsContext } from "./applications-context";
 
 export function ApplicationsContextProvider({ children }) {
     const [applications, setApplications] = useState(() => {
@@ -45,17 +44,13 @@ export function ApplicationsContextProvider({ children }) {
     }
 
     return (
-        <ApplicationsContext.Provider value={{ 
-        applications, 
-        addApplication, 
-        deleteApplication, 
-        updateApplication 
+        <ApplicationsContext.Provider value={{
+            applications,
+            addApplication,
+            deleteApplication,
+            updateApplication
         }}>
             {children}
         </ApplicationsContext.Provider>
     );
-}
-
-export function useApplications() {
-    return useContext(ApplicationsContext);
 }

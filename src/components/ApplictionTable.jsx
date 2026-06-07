@@ -1,7 +1,7 @@
 import StatusBadge from "./StatusBadge";
 import { Pencil, Trash2 } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { useApplications } from "../context/ApplicationsContext";
+import { useApplications } from "../context/useApplications";
 
 
 export default function ApplicationTable({

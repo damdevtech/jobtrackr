@@ -1,7 +1,7 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { useApplications } from "../context/ApplicationsContext";
+import { useApplications } from "../context/useApplications";
 import Header from "../components/Header";
 
 function EditJob() {

@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
-import { useApplications } from "../context/ApplicationsContext"
+import { useApplications } from "../context/useApplications"
 import { NavLink } from "react-router-dom";
 
 function RecentApplications() {

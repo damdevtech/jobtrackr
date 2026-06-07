@@ -1,22 +1,13 @@
 export default function StatusBadge({ status }) {
-    let colorClasses = "";
+    const colorClassesByStatus = {
+        Applied: "bg-slate-100 text-slate-600",
+        Offered: "bg-emerald-100 text-emerald-700",
+        Interviewing: "bg-violet-100 text-violet-700",
+        Rejected: "bg-rose-100 text-rose-700",
+    };
 
-    switch (status) {
-        case "Applied":
-            colorClasses = "bg-slate-100 text-slate-600";
-            break;
-        case "Offered":
-            colorClasses = "bg-emerald-100 text-emerald-700";
-            break;
-        case "Interviewing":
-            colorClasses = "bg-violet-100 text-violet-700";
-            break;
-        case "Rejected":
-            colorClasses = "bg-rose-100 text-rose-700";
-            break;
-        default:
-            colorClasses = "bg-slate-100 text-slate-600";
-    }
+    const colorClasses =
+        colorClassesByStatus[status] || "bg-slate-100 text-slate-600";
 
     return (
         <span
